@@ -1,0 +1,101 @@
+# ======================== Data & Checkpoints ========================
+data/
+checkpoints/
+work_dirs/
+work_dir/
+vis_results/
+
+# ======================== Build & Compiled ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+mmcv_build/
+
+# ======================== Backup / Duplicate Projects ========================
+yolo-world-master_02/
+
+# ======================== Ablation Visualizations (large) ========================
+configs/custom_flir/new_ircorrection/ablation/
+
+# ======================== IDE & OS ========================
+.vscode/
+.idea/
+.cursor/
+.DS_Store
+.data/
+.dist_test/
+
+# ======================== Logs & Temp ========================
+*.log
+*.log.json
+*.pkl
+*.pkl.json
+threshold_search_results*.txt
+
+# ======================== Model Weights ========================
+*.pth
+*.pt
+*.onnx
+*.engine
+
+# ======================== Archives ========================
+*.tar.gz
+
+# ======================== Python Env ========================
+.env
+.venv
+env/
+venv/
+
+# ======================== Editor Temp ========================
+*.py~
+*.sh~
+*.swp
+*.swo
+*~
+
+# ======================== Debug / Check Scripts ========================
+check_*.py
+compare_*.py
+verify_*.py
+organize_annotations.py
+run_debug_*.py
+run_debug_*.sh
+run_threshold_search_*.sh
+test_noupdate.sh
+visualize.py
+
+# ======================== Root-Level Duplicates ========================
+lite_dct_ghost_ir_backbone_v2.py
+rgb_ir_fusion_net.py
+synchronized_rgb_ir_aug.py
+
+# ======================== Internal Docs ========================
+HANDOVER.md
+BUG_FIX_REPORT.md
+FIXES_SUMMARY.md
+LOSS_SCALING_FIX.md
+STABLE_TRAINING_GUIDE.md
+STAGE1_CONFIG_FINAL.md
+
+# ======================== Docker ========================
+Dockerfile
+.dockerignore
+
+# ======================== Visualization & Analysis ========================
+visualization/
+parameter_calculate/
+
+# ======================== Files with secrets ========================
+strategy/cursor_transfor/cursor_github.md
+
+# ======================== Misc ========================
+venus_run.sh
+.gitmodules
+install_env.sh
