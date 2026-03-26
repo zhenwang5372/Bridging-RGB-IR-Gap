@@ -1,4 +1,3 @@
-# Copyright (c) Tencent Inc. All rights reserved.
 from .backbones import *  # noqa
 from .layers import *  # noqa
 from .detectors import *  # noqa

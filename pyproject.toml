@@ -5,32 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "yolo_world"
 version = "0.1.0"
-description = "YOLO-World: Real-time Open Vocabulary Object Detection"
+description = "Bridging the RGB-IR Gap: Consensus and Discrepancy Modeling for Text-Guided Multispectral Detection"
 readme = "README.md"
-keywords = ["object detection"]
-authors = [
-    { name = "Tencent AILab", email = "ronnysong@tencent.com" },
-]
+keywords = ["object detection", "multispectral", "RGB-IR", "text-guided"]
 license = {text = "Apache License 2.0"}
-
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "License :: OSI Approved :: Apache Software License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-]
-requires-python = ">= 3.7"
-
+requires-python = ">= 3.8"
 dependencies = [
     "wheel",
     "torch>=1.11.0",
-    "torchvision>=0.16.2",
+    "torchvision>=0.15.2",
     "transformers",
     "tokenizers",
     "numpy",
@@ -40,17 +23,12 @@ dependencies = [
     "mmcv==2.2.0",
     "mmdet==3.0.0",
     "mmengine==0.10.3",
-    # 注意: mmyolo 需要从 third_party/mmyolo 使用 setup.py develop 安装
-    # 'mmyolo @ git+https://github.com/onuralpszr/mmyolo.git',
-
 ]
 
 [tool.setuptools]
 package-dir = {"yolo_world" = "yolo_world"}
 include-package-data = false
 license-files = ["LICENSE"]
-zip-safe = true
 
 [tool.setuptools.packages.find]
 include = ["yolo_world*"]
-exclude = ["docs*", "tests*","third_party*","assets*"]
