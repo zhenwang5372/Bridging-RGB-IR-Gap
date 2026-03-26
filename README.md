@@ -4,27 +4,27 @@
 
 Official implementation of **"Bridging the RGB-IR Gap: Consensus and Discrepancy Modeling for Text-Guided Multispectral Detection"**.
 
-We propose a text-guided multispectral object detection framework that explicitly models the **consensus** and **discrepancy** between RGB and infrared (IR) modalities. Built upon [YOLO-World](https://github.com/AILab-CVC/YOLO-World), our method introduces:
+We propose a text-guided multispectral object detection framework that explicitly models the **consensus** and **discrepancy** between RGB and infrared (IR) modalities. Our method introduces:
 
-- **IR_RGB_Merr_Cons** — Dual-branch module that identifies consensus regions (both modalities agree) and discrepancy regions (IR-specific areas unsupported by RGB), then applies learnable correction and enhancement.
-- **LiteDCTGhostIRBackboneV2** — Lightweight IR backbone using Discrete Cosine Transform (DCT) for frequency-domain feature extraction combined with enhanced Ghost modules and lightweight FPN.
-- **TextUpdateConcatPool** — Multi-scale text update using both max-pooling and average-pooling (3×3 each), concatenated to 18 tokens/level × 3 levels = 54 visual tokens for text-visual interaction.
-- **TextGuidedRGBEnhancementV2** — CLIP text-guided cross-modal attention for class-specific RGB feature enhancement.
-- **MultiLevelRGBIRFusion** — Multi-level cross-modal fusion with spatial and channel attention.
+- **Consensus and Discrepancy Module (IR_RGB_Merr_Cons):** A dual-branch module that explicitly models both cross-modal consensus (M_cons) and discrepancy (M_err) between RGB and IR attention maps, enabling targeted enhancement of IR features.
+
+- **LiteDCTGhost IR Backbone:** A lightweight IR feature extractor based on DCT (Discrete Cosine Transform) frequency decomposition and enhanced Ghost modules, achieving efficient multi-scale IR feature extraction with learnable frequency separation.
+
+- **TextUpdateConcatPool:** A multi-scale text update module that uses both max-pooling and average-pooling to extract complementary visual representations (18 tokens per level, 54 total across 3 FPN levels), updating text embeddings with richer visual context through multi-head cross-attention.
 
 ## Architecture
 
 ```
-RGB Image → YOLOv8-CSPDarknet ────┐
-                                  ├─→ IR_RGB_Merr_Cons → Fusion → RGB Enhancement → Aggregator → Head
-IR Image  → DCT-Ghost IR Backbone ┘         ↑                         ↑                 ↓
-                                           │                         │          aggregated feats
-Text      → CLIP Text Encoder ─────────────┴─────────────────────────┼─→ TextUpdateConcatPool
-                                                                     │         ↓
-                                                                     └── updated text embeddings
+RGB Image → CSPDarknet ────────────┐
+                                   ├─→ IR_RGB_Merr_Cons → Fusion → RGB Enhancement → Aggregator → Head
+IR Image  → DCT-Ghost IR Backbone ─┘         ↑                         ↑                 ↓
+                                              │                         │          aggregated feats
+Text      → CLIP Text Encoder ────────────────┴─────────────────────────┼─→ TextUpdateConcatPool
+                                                                        │         ↓
+                                                                        └── updated text embeddings
 ```
 
-### IR_RGB_Merr_Cons (Core Module)
+### Consensus and Discrepancy Module (Core)
 
 Computes two complementary maps from text-guided attention:
 
@@ -78,7 +78,7 @@ data/FLIR_aligned/
 
 ```bash
 mkdir -p checkpoints
-# Download YOLO-World v2 pretrained weights to checkpoints/
+# Download pretrained weights to checkpoints/
 ```
 
 ## Training
@@ -105,19 +105,19 @@ python tools/test.py configs/yolow_v2_rgb_ir_flir_ircorrection_IR_RGB_Merr_Cons_
 │   └── ablation/                             # Ablation study configs
 ├── yolo_world/
 │   ├── models/
-│   │   ├── detectors/                        # DualStreamYOLOWorldDetector
-│   │   ├── backbones/                        # LiteDCTGhostIRBackboneV2, CLIP, dual-stream backbone
+│   │   ├── detectors/                        # Dual-stream detector
+│   │   ├── backbones/                        # LiteDCTGhost IR, CLIP, dual-stream backbone
 │   │   ├── necks/
-│   │   │   ├── text_guided_ir_correction/    # IR_RGB_Merr_Cons (core contribution)
-│   │   │   ├── rgb_ir_fusion.py              # MultiLevelRGBIRFusion
+│   │   │   ├── text_guided_ir_correction/    # Consensus & Discrepancy Module
+│   │   │   ├── rgb_ir_fusion.py              # Multi-level RGB-IR fusion
 │   │   │   ├── text_guided_rgb_enhancement_v2.py
 │   │   │   ├── multiscale_text_update_v4.py  # TextUpdateConcatPool
 │   │   │   └── class_dimension_aggregator.py
-│   │   ├── dense_heads/                      # YOLOWorldHead
-│   │   ├── data_preprocessors/               # FLIRDataPreprocessor
+│   │   ├── dense_heads/                      # Detection head
+│   │   ├── data_preprocessors/               # Dual-modal data preprocessing
 │   │   └── layers/
 │   ├── datasets/                             # FLIRDataset, transforms
-│   └── engine/                               # YOLOWv5OptimizerConstructor
+│   └── engine/                               # Optimizer constructor
 ├── tools/                                    # train.py, test.py, dist scripts
 ├── pyproject.toml
 ├── requirements.txt
@@ -137,7 +137,6 @@ python tools/test.py configs/yolow_v2_rgb_ir_flir_ircorrection_IR_RGB_Merr_Cons_
 
 ## Acknowledgements
 
-- [YOLO-World](https://github.com/AILab-CVC/YOLO-World)
 - [MMDetection](https://github.com/open-mmlab/mmdetection)
 - [MMYOLO](https://github.com/open-mmlab/mmyolo)
 - [CLIP](https://github.com/openai/CLIP)
