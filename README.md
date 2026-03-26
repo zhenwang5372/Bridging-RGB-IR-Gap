@@ -16,12 +16,14 @@ We propose a text-guided multispectral object detection framework that explicitl
 
 ```
 RGB Image → CSPDarknet ────────────┐
-                                   ├─→ IR_RGB_Merr_Cons → Fusion → RGB Enhancement → Aggregator → Head
-IR Image  → DCT-Ghost IR Backbone ─┘         ↑                         ↑                 ↓
+                                   ├─→ IR_RGB_Merr_Cons → Fusion → RGB Enhancement → Aggregator
+IR Image  → DCT-Ghost IR Backbone ─┘         ↑                         ↑                 │
                                               │                         │          aggregated feats
 Text      → CLIP Text Encoder ────────────────┴─────────────────────────┼─→ TextUpdateConcatPool
-                                                                        │         ↓
-                                                                        └── updated text embeddings
+                                                                        │         │
+                                                                        │   updated text embeddings
+                                                                        │         │
+                                                                        └────→  Head
 ```
 
 ### Consensus and Discrepancy Module (Core)
