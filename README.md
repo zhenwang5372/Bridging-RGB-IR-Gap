@@ -1,6 +1,6 @@
 # Bridging the RGB-IR Gap: Consensus and Discrepancy Modeling for Text-Guided Multispectral Detection
 
-**Code Contributors:** [Jiaqi Wu](https://word-ky.github.io) | Zhen Wang
+**Code Contributors:**  Zhen Wang | [Jiaqi Wu](https://word-ky.github.io) |
 
 ## Overview
 
